@@ -1,27 +1,27 @@
-   cmake_minimum_required(VERSION 3.10)
-   project(SimpleFactory)
+cmake_minimum_required(VERSION 3.10)
+project(k)
 
-   set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 17)
 
-   include_directories(.)
+include_directories(.)
 
-   add_executable(SimpleFactory main.cpp SimpleFactory.cpp)
-   
-     cmake_minimum_required(VERSION 3.10)
-     project(SimpleFactory)
+# Rename the existing target to avoid conflicts
+add_executable(MainExecutable main.cpp SimpleFactory.cpp)
 
-     set(CMAKE_CXX_STANDARD 17)
+# Google Test
+enable_testing()
 
-     include_directories(.)
+# Fix the path for add_subdirectory()
+add_subdirectory(lib/googletest)
 
-     add_executable(SimpleFactory main.cpp SimpleFactory.cpp)
+# Add the include directories for Google Test
+include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
 
-     # Google Test
-     enable_testing()
-     add_subdirectory(lib/googletest)
-     include_directories(lib/googletest/googletest/include)
+# Create the test executable
+add_executable(SimpleFactoryTests test/SimpleFactoryTest.cpp SimpleFactory.cpp)
 
-     add_executable(SimpleFactoryTests test/SimpleFactoryTest.cpp SimpleFactory.cpp)
-     target_link_libraries(SimpleFactoryTests gtest gtest_main)
-     add_test(NAME SimpleFactoryTests COMMAND SimpleFactoryTests)
-     
+# Link Google Test libraries to the test executable
+target_link_libraries(SimpleFactoryTests gtest gtest_main)
+
+# Add a test
+add_test(NAME SimpleFactoryTests COMMAND SimpleFactoryTests)
