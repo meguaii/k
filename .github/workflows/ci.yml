@@ -1,40 +1,36 @@
 name: CMake
 
-on: [push, pull_request]
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+env:
+  BUILD_TYPE: Release
 
 jobs:
+
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
-      
-      - name: Install CMake
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y wget
-          wget https://github.com/Kitware/CMake/releases/download/v3.19.2/cmake-3.19.2-Linux-x86_64.sh
-          sudo mkdir /opt/cmake
-          sudo sh cmake-3.19.2-Linux-x86_64.sh --skip-license --prefix=/opt/cmake
-          echo "/opt/cmake/bin" >> $GITHUB_PATH
+    - uses: actions/checkout@v2
 
-      - name: Configure CMake
-        run: cmake -S . -B build
-        
-      - name: Build
-        run: cmake --build build
-        
-      - name: Run tests
-        run: ctest --test-dir build
-        
-      - name: Upload build artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: SimpleFactory
-          path: build/SimpleFactory
-          
-      - name: Upload test results
-        uses: actions/upload-artifact@v2
-        with:
-          name: TestResults
-          path: build/Testing/Temporary
+    - name: Create Build Environment
+      run: cmake -E make_directory ${{runner.workspace}}/build
+
+    - name: Configure CMake
+      shell: bash
+      working-directory: ${{runner.workspace}}/build
+      run: cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=$BUILD_TYPE
+
+    - name: Build
+      working-directory: ${{runner.workspace}}/build
+      shell: bash
+      run: cmake --build . --config $BUILD_TYPE
+
+    - name: Test
+      working-directory: ${{runner.workspace}}/build
+      shell: bash
+      run: ctest -C $BUILD_TYPE
