@@ -6,7 +6,7 @@ set(CMAKE_CXX_STANDARD 17)
 # Основной исполняемый файл
 add_executable(SimpleFactoryExecutable main.cpp SimpleFactory.cpp)
 
-# Google Test
+# Google Tes
 enable_testing()
 
 # Добавляем поддиректорию для Google Test
