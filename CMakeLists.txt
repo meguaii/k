@@ -4,7 +4,7 @@ project(SimpleFactory)
 set(CMAKE_CXX_STANDARD 17)
 
 # Основной исполняемый файл
-add_executable(SimpleFactoryExecutableInBuild main.cpp SimpleFactory.cpp)
+add_executable(SimpleFactoryExecutable main.cpp SimpleFactory.cpp)
 
 # Google Test
 enable_testing()
