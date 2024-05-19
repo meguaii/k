@@ -3,8 +3,6 @@ project(SimpleFactory)
 
 set(CMAKE_CXX_STANDARD 17)
 
-include_directories(.)
-
 # Основной исполняемый файл
 add_executable(SimpleFactoryExecutable main.cpp SimpleFactory.cpp)
 
@@ -25,3 +23,7 @@ target_link_libraries(SimpleFactoryTests gtest gtest_main)
 
 # Добавляем тест
 add_test(NAME SimpleFactoryTests COMMAND SimpleFactoryTests)
+
+# Указываем пути к заголовочным файлам для исполняемых файлов
+target_include_directories(SimpleFactoryExecutable PRIVATE .)
+target_include_directories(SimpleFactoryTests PRIVATE .)
