@@ -13,7 +13,7 @@ enable_testing()
 add_subdirectory(lib/googletest)
 
 # Включаем директории для Google Test
-include_directories(lib/googletest/googletest/include)
+include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
 
 # Создаем исполняемый файл для тестов
 add_executable(SimpleFactoryTests test/SimpleFactoryTest.cpp SimpleFactory.cpp)
