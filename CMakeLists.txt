@@ -6,7 +6,7 @@ set(CMAKE_CXX_STANDARD 17)
 include_directories(.)
 
 # Основной исполняемый файл
-add_executable(SimpleFactory main.cpp SimpleFactory.cpp)
+add_executable(SimpleFactoryExecutable main.cpp SimpleFactory.cpp)
 
 # Google Test
 enable_testing()
